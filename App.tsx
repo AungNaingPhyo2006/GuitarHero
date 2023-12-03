@@ -136,9 +136,9 @@ function App() : JSX.Element {
       <Tab.Navigator
         initialRouteName="Feed"
         screenOptions={({ route }) => ({
-          headerStyle: { backgroundColor: '#42f44b' },
+          headerStyle: { backgroundColor: '#42f44b',},
           headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' },
+          headerTitleStyle: { fontWeight: 'bold' , },
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
           tabBarIcon: ({ focused, color, size }: TabBarIconProps) => {
@@ -153,9 +153,12 @@ function App() : JSX.Element {
           name="HomeStack"
           component={HomeStack}
           options={{
-            tabBarLabel: 'Home',
-            title: 'Home',
-          }}  />
+            // tabBarLabel: 'Home',
+            // title: 'Home',
+            // headerTitleAlign:'center'
+            headerShown:false
+          }}  
+          />
         <Tab.Screen
           name="SettingsStack"
           component={SettingsStack}

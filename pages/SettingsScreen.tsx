@@ -4,10 +4,32 @@ import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView
+  SafeAreaView,
+  Alert
 } from 'react-native';
 
+
 const SettingsScreen = ({ route, navigation }: any) => {
+  React.useEffect (()=> {
+  
+      Alert.alert(
+        '',
+        'Under Progress!',
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              navigation.goBack();
+            },
+          },
+        ],
+        { cancelable: false }
+      );
+    
+
+   
+   },[navigation])
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 16 }}>

@@ -1,7 +1,23 @@
 import * as React from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text, SafeAreaView ,Alert} from 'react-native';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ route, navigation }: any) => {
+  React.useEffect (()=> {
+    Alert.alert(
+      '',
+      'Under Progress!',
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigation.goBack();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+   },[])
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 16 }}>

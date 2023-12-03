@@ -20,8 +20,8 @@ const {navigation} = props;
     onPress={() => {
       navigation.navigate('Details' , { artistName :  item.name})
      }}
-      style={{ padding: 10 , borderWidth:1, margin:12, width:'80%', borderRadius:5,alignItems:'center'}}>
-      <Text >
+      style={styles.button}>
+      <Text style={{color:'red',fontWeight:'bold', fontSize:18, marginLeft:12}}>
         {item.name}
       </Text>
     </TouchableOpacity>
@@ -29,46 +29,26 @@ const {navigation} = props;
 // <=======================>
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 16 }}>
+      <View style={{ flex: 1,  marginHorizontal:12,}}>
         <View
           style={{
-            marginHorizontal:12,
-            padding:12,
-          
+            marginVertical:9,
           }}>
           <Text
             style={{
               fontSize: 25,
               textAlign: 'center',
-              marginBottom: 16
+              marginBottom: 16,
+              fontWeight:'bold'
             }}>
-            You are on Home Screen
-          </Text>
-   <View>
-   <FlatList
+            Your Artists List
+          </Text>         
+        </View>
+        <FlatList
       data={artists}
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderArtistItem}
     />
-   </View>
-         
-        </View>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            color: 'grey'
-          }}>
-          Music is the shorthand of emotion.
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            textAlign: 'center',
-            color: 'grey'
-          }}>
-          www.anp.com
-        </Text>
       </View>
     </SafeAreaView>
   );
@@ -77,11 +57,14 @@ const {navigation} = props;
 const styles = StyleSheet.create({
   button: {
     marginHorizontal:12,
-    alignItems: 'center',
+    // alignItems: 'center',
     backgroundColor: '#DDDDDD',
-    padding: 10,
-    width: 300,
+    padding: 15,
+    // width: 300,
     marginTop: 16,
+    marginBottom:5,
+    borderRadius:5,
+    elevation:5
   },
 });
 export default HomeScreen;
