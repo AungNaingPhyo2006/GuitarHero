@@ -57,10 +57,9 @@ const {navigation} = props;
 const styles = StyleSheet.create({
   button: {
     marginHorizontal:12,
-    // alignItems: 'center',
+    alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 15,
-    // width: 300,
     marginTop: 16,
     marginBottom:5,
     borderRadius:5,

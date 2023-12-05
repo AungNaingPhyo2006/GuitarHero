@@ -16,6 +16,7 @@ const DetailsScreen = (props : propsType)  => {
     title: string;
     pattern:string;
     intro:string;
+    youtube:string;
     lyrics: string[];
     chords: string[];
   };
@@ -47,7 +48,7 @@ const DetailsScreen = (props : propsType)  => {
       renderItem={({item})=> 
       <TouchableOpacity  style={styles.button}
       onPress={
-        () => navigation.navigate('SongChords', {pattern : item.pattern,intro: item.intro,chords : item.chords , lyrics : item.lyrics})}
+        () => navigation.navigate('SongChords', {youtube : item.youtube,pattern : item.pattern,intro: item.intro,chords : item.chords , lyrics : item.lyrics})}
         >
         <Text style={{color:'blue'}}>{item.title}</Text>
       </TouchableOpacity>}
