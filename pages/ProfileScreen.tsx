@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, SafeAreaView ,Alert} from 'react-native';
+import ChordDiagram from '../components/ChordDiagram';
 
 const ProfileScreen = ({ route, navigation }: any) => {
   React.useEffect (()=> {
@@ -10,7 +11,7 @@ const ProfileScreen = ({ route, navigation }: any) => {
         {
           text: 'OK',
           onPress: () => {
-            navigation.goBack();
+           // navigation.goBack();
           },
         },
       ],
@@ -21,6 +22,7 @@ const ProfileScreen = ({ route, navigation }: any) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 16 }}>
+        <ChordDiagram/>
         <View
           style={{
             flex: 1,

@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Alert
 } from 'react-native';
+import ChordDiagram from '../components/ChordDiagram';
 
 
 const SettingsScreen = ({ route, navigation }: any) => {
@@ -19,7 +20,7 @@ const SettingsScreen = ({ route, navigation }: any) => {
           {
             text: 'OK',
             onPress: () => {
-              navigation.goBack();
+             // navigation.goBack();
             },
           },
         ],
