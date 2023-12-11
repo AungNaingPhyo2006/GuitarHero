@@ -1,20 +1,21 @@
-import { StyleSheet, Text, View , FlatList, TouchableOpacity, Linking,Alert} from 'react-native'
-import React from 'react'
+import { ScrollView,StyleSheet, Text, View , FlatList, TouchableOpacity, Linking,Alert, Animated} from 'react-native'
+import React, { useRef, useState } from 'react'
 import { stackScreens } from '../stacks/HomeStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ArrowLeft, ChevronDown, ChevronRightSquareIcon, Home, } from 'lucide-react-native';
 
 type propsType = NativeStackScreenProps<stackScreens, 'SongChords'>
 
 const SongChordsScreen = (props : propsType) => {
   const {navigation} = props;
-  const {intro, pattern,chords, lyrics, youtube} = props.route.params
+  const {intro, pattern,chords, lyrics, youtube,note} = props.route.params
   // console.warn(youtube)
  // console.warn(chords)  // ["C", "G", "Am", "F"] 
  // console.warn(lyrics) // ["Lyric line 1", "Lyric line 2", "Lyric line 3", "Lyric line 4"] 
 
- const openYouTubeLink = async () => {
+ const openYouTubeLink = async (youtubeLink: string) => {
   try{
-    Linking.openURL(youtube);
+    Linking.openURL(youtubeLink);
   }catch(err){
     Alert.alert('',`An error occurred : ${err}`);
   }
@@ -36,27 +37,82 @@ const SongChordsScreen = (props : propsType) => {
   }
 };
 
+const [showOptions, setShowOptions] = useState<boolean>(false);
+// <======Start icon Animation=====>
+const rotateValue = useRef(new Animated.Value(0)).current;
+const handlePress = () => {
+  setShowOptions(!showOptions)
+
+  Animated.timing(rotateValue, {
+    toValue: showOptions ? 0 : 1,
+    duration: 300,
+    useNativeDriver: false,
+  }).start();
+};
+
+const spin = rotateValue.interpolate({
+  inputRange: [0, 1],
+  outputRange: ['0deg', '-180deg'],
+});
+
+const spinStyle = {
+  transform: [{ rotate: spin }],
+  width:20,
+  height:20,
+  borderRadius:10,
+  backgroundColor:'blue',
+};
+
+// <=======End Animation====>
+
  const renderListItem = ({ item, index }: { item: string; index: number })=> (
   <View style={styles.itemContainer}>
     <Text style={styles.chordText}>{'     '}{chords[index]}</Text>
     <Text style={styles.lyricText}>{item}</Text>
-    
+
   </View>
 );
 
   return (
     <View style={{marginHorizontal:12, marginTop:5}}>
-    <View style={{marginVertical:5, marginLeft:9,padding:5, borderBottomWidth: 1,borderBottomColor: '#ddd',}}>
-    <Text style={{color:'skyblue', fontWeight:'bold'}}>Pattern: {pattern ? pattern : 'coming soon'}</Text>
-    <Text style={{color:'orange',fontWeight:'bold'}}>Intro: {intro? intro : 'coming soon'}</Text>
-    <TouchableOpacity style={{alignSelf:'flex-end',margin:5, borderWidth:1,padding:5, borderRadius:10,}} onPress={openYouTubeLink}>
-        <Text style={{color:'blue',fontWeight:'bold', fontStyle:'italic', }}>Video</Text>
+      
+    <ScrollView style={{marginVertical:5, marginLeft:9,padding:5, borderBottomWidth: 1,borderBottomColor: '#ddd',}}>
+    <Text style={{color:'skyblue', fontWeight:'bold', textAlign:'justify'}}>Pattern: {pattern ? pattern : 'coming soon'}</Text>
+    <Text style={{color:'orange',fontWeight:'bold',textAlign:'justify', marginVertical:5}}>Intro: {intro? intro : 'coming soon'}</Text>
+  
+  
+    <View style={{marginBottom:12}}>
+    <TouchableOpacity 
+    onPress={handlePress}
+     style={styles.optionBtn}>
+      <Text style={{color:'red', fontSize:16, marginHorizontal:12, fontWeight:'bold'}}>{showOptions?'Hide  Tips':'Show Tips'}</Text>
+      <Animated.View style={spinStyle}>
+      <ChevronDown size={20} color='white'/>
+      </Animated.View>
     </TouchableOpacity>
-  </View>
+    { showOptions && (
+    <View style={{backgroundColor:'cyan', marginTop:5,marginBottom:150 , borderRadius:5}}>
+    <View style={{margin:5,padding:5}}>
+      { note?.map( (item, index) => (
+        <Text key={index} style={{color:'green',fontWeight:'bold', fontStyle:'italic',textAlign:'justify',marginVertical:5 }}>({index + 1}) {item}</Text>
+      ))}
+    </View>
+    <View style={{borderWidth:0.5, borderColor:'red',marginTop:12, marginHorizontal:12}}></View>
+    {youtube.map((youtubeLink,index)=>(
+      <TouchableOpacity key={index} style={{alignSelf:'center',marginVertical:9,padding:5, borderWidth:1, borderRadius:5,backgroundColor:'white',elevation:3}} onPress={()=>openYouTubeLink(youtubeLink)}>
+        <Text style={{color:'blue',fontWeight:'bold',  }}>Tutorial Video ({index + 1})</Text>
+    </TouchableOpacity>
+    ))}
+    
+    </View>
+     )}
+    </View>
+
+  </ScrollView>
       <FlatList
       data={lyrics}
       renderItem={renderListItem}
-      contentContainerStyle={{paddingBottom:200}}
+      contentContainerStyle={{paddingBottom:300}}
       keyExtractor={(item, index) => index.toString()}
       showsVerticalScrollIndicator={false}
     />
@@ -90,5 +146,14 @@ const styles = StyleSheet.create({
   fontStyle:'italic',
   textAlign:'justify'
   },
- 
+  optionBtn : {
+    backgroundColor:'cyan' ,
+    padding:5, 
+    marginBottom:11,
+    borderRadius: 5 , 
+    alignSelf:'flex-start', 
+    flexDirection:'row',
+    elevation:3
+  },
+
 });

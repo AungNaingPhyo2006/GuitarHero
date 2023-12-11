@@ -16,7 +16,8 @@ const DetailsScreen = (props : propsType)  => {
     title: string;
     pattern:string;
     intro:string;
-    youtube:string;
+    note:string[];
+    youtube:string[];
     lyrics: string[];
     chords: string[];
   };
@@ -37,7 +38,8 @@ const DetailsScreen = (props : propsType)  => {
               fontSize: 25,
               textAlign: 'center',
               marginBottom: 16,
-              fontWeight:'bold'
+              fontWeight:'bold',
+              color:'green'
             }}>
             Song List         
           </Text>
@@ -48,7 +50,7 @@ const DetailsScreen = (props : propsType)  => {
       renderItem={({item})=> 
       <TouchableOpacity  style={styles.button}
       onPress={
-        () => navigation.navigate('SongChords', {youtube : item.youtube,pattern : item.pattern,intro: item.intro,chords : item.chords , lyrics : item.lyrics})}
+        () => navigation.navigate('SongChords', {youtube : item.youtube,note: item.note,pattern : item.pattern,intro: item.intro,chords : item.chords , lyrics : item.lyrics})}
         >
         <Text style={{color:'blue'}}>{item.title}</Text>
       </TouchableOpacity>}

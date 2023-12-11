@@ -12,7 +12,7 @@ export type ScreenOptions = {
 export type stackScreens = {
     Home : undefined,
     Details : {artistName : string ,}, 
-    SongChords : { youtube: string ,pattern:string, intro:string,chords : string[] , lyrics : string[],} , 
+    SongChords : { youtube: string[] ,note: string[],pattern:string, intro:string,chords : string[] , lyrics : string[],} , 
 }
 const Stack = createNativeStackNavigator<stackScreens>();
 

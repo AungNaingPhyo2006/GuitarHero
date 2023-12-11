@@ -39,7 +39,8 @@ const {navigation} = props;
               fontSize: 25,
               textAlign: 'center',
               marginBottom: 16,
-              fontWeight:'bold'
+              fontWeight:'bold',
+              color:'green'
             }}>
             Your Artists List
           </Text>         
