@@ -76,7 +76,7 @@ const spinStyle = {
   return (
     <View style={{marginHorizontal:12, marginTop:5}}>
       
-    <ScrollView style={{marginVertical:5, marginLeft:9,padding:5, borderBottomWidth: 1,borderBottomColor: '#ddd',}}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{marginVertical:5, marginLeft:9,padding:5, borderBottomWidth: 1,borderBottomColor: '#ddd',}}>
     <Text style={{color:'skyblue', fontWeight:'bold', textAlign:'justify'}}>Pattern: {pattern ? pattern : 'coming soon'}</Text>
     <Text style={{color:'orange',fontWeight:'bold',textAlign:'justify', marginVertical:5}}>Intro: {intro? intro : 'coming soon'}</Text>
   

@@ -112,14 +112,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import HomeScreen from './pages/HomeScreen';
-import DetailsScreen from './pages/DetailsScreen';
-import ProfileScreen from './pages/ProfileScreen';
-import SettingsScreen from './pages/SettingsScreen';
+// import HomeScreen from './pages/HomeScreen';
+// import DetailsScreen from './pages/DetailsScreen';
+// import ProfileScreen from './pages/ProfileScreen';
+// import SettingsScreen from './pages/SettingsScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Home, Music, Music2 } from 'lucide-react-native';
-import HomeStack from './stacks/HomeStack';
-import SettingsStack from './stacks/SettingsStack';
+import HomeStack from './src/stacks/HomeStack';
+import SettingsStack from './src/stacks/SettingsStack';
 
 
 const Stack = createNativeStackNavigator();
