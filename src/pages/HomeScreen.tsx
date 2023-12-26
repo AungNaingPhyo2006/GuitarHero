@@ -7,7 +7,8 @@ import {
   Text,
   SafeAreaView,
   FlatList,
-  Alert
+  Alert,
+  Image
 } from 'react-native';
 import { artists } from '../constants/artist';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -33,17 +34,26 @@ const {navigation} = props;
         <View
           style={{
             marginVertical:9,
+            flexDirection:'row',
+            justifyContent:'center'
           }}>
+            <Image
+            source={require('../assets/images/anp.jpg')}
+            style={{width:50,height:50, borderRadius:30,marginHorizontal:12}}
+            />
+            <View style={{justifyContent:'center',alignItems:'center'}}>
           <Text
             style={{
               fontSize: 25,
               textAlign: 'center',
-              marginBottom: 16,
+              // marginBottom: 6,
+              // marginTop:9,
               fontWeight:'bold',
               color:'green'
             }}>
             Your Artists List
-          </Text>         
+          </Text> 
+          </View>        
         </View>
         <FlatList
       data={artists}

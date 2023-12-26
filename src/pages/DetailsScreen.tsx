@@ -25,6 +25,7 @@ const DetailsScreen = (props : propsType)  => {
   const getArtistData = artists.find((artist) => artist.name === artistName);
   const songsArray: Song[] = getArtistData ? getArtistData.songs : [];
   //  console.warn(songsArray[0].chords/title/lyrics)
+  console.log('Details')
   // <==============>
   return (
     <SafeAreaView style={{ flex: 1 }}>
