@@ -1,96 +1,124 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
   View,
   Text,
   SafeAreaView,
-  Alert
+  Platform,
+  PermissionsAndroid,
+  TouchableHighlight,
 } from 'react-native';
-import ChordDiagram from '../components/ChordDiagram';
-
+import CallDetectorManager from 'react-native-call-detection';
 
 const SettingsScreen = ({ route, navigation }: any) => {
-  React.useEffect (()=> {
-  
-      Alert.alert(
-        '',
-        'Under Progress!',
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-             // navigation.goBack();
-            },
-          },
-        ],
-        { cancelable: false }
-      );
-    
+  const [featureOn, setFeatureOn] = useState<boolean>(false);
+  const [incoming, setIncoming] = useState<boolean>(false);
+  const [number, setNumber] = useState<string | null>(null);
 
-   
-   },[navigation])
+  useEffect(() => {
+    const requestPhonePermission = async () => {
+      if (Platform.OS === 'android') {
+        try {
+          const granted = await PermissionsAndroid.requestMultiple([
+            PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+            PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
+          ]);
+
+          if (
+            granted['android.permission.READ_CALL_LOG'] ===
+              PermissionsAndroid.RESULTS.GRANTED &&
+            granted['android.permission.READ_PHONE_STATE'] ===
+              PermissionsAndroid.RESULTS.GRANTED
+          ) {
+            startListenerTapped();
+          } else {
+            console.warn('Phone state permission denied');
+          }
+        } catch (error) {
+          console.error('Error requesting phone permission:', error);
+        }
+      } else {
+        startListenerTapped();
+      }
+    };
+  requestPhonePermission();
+  // stopListenerTapped()
+  }, []);
+
+  let callDetector: CallDetectorManager | null = null;
+
+  const startListenerTapped = () => {
+    setFeatureOn(true);
+    callDetector = new CallDetectorManager(
+      (event: string, phoneNumber: any) => {
+        console.log('phone=>', phoneNumber);
+        if (event === 'Disconnected') {
+          setIncoming(false);
+          setNumber(null);
+        } else if (event === 'Incoming' || event === 'Offhook') {
+          setIncoming(true);
+          setNumber(phoneNumber);
+        } else if (event === 'Missed') {
+          setIncoming(false);
+          setNumber(null);
+        }
+      },
+      true,
+      () => {},
+      {
+        title: 'Phone State Permission',
+        message:
+          'This app needs access to your phone state in order to react and/or to adapt to incoming calls.',
+      }
+    );
+  };
+
+  const stopListenerTapped = () => {
+    setFeatureOn(false);
+    callDetector && callDetector.dispose();
+  };
+
+
+ 
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 16 }}>
+    <View style={styles.body}>
+      <Text style={styles.text}>Should the detection be on?</Text>
+      <TouchableHighlight
+        onPress={featureOn ? stopListenerTapped : startListenerTapped}
+      >
         <View
           style={{
-            flex: 1,
-            alignItems: 'center',
+            width: 200,
+            height: 200,
             justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: 'center',
-              marginBottom: 16
-            }}>
-            You are on Setting Screen
-          </Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={
-              () => navigation.navigate('Home')
-            }>
-            <Text>Go to Home Tab</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={styles.button}
-            onPress={
-              () => navigation.navigate('Profile')
-            }>
-            <Text>Open Profile Screen</Text>
-          </TouchableOpacity>
+            alignItems: 'center',
+            backgroundColor: featureOn ? 'greenyellow' : 'red',
+          }}
+        >
+          <Text style={styles.text}>{featureOn ? 'ON' : 'OFF'}</Text>
         </View>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            color: 'grey'
-          }}>
-          React Native Bottom Navigation
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            textAlign: 'center',
-            color: 'grey'
-          }}>
-          www.aboutreact.com
-        </Text>
-      </View>
-    </SafeAreaView>
+      </TouchableHighlight>
+      {incoming && (
+        <Text style={{ fontSize: 50 }}>{number?.toString()} Incoming</Text>
+      )}
+    </View>
   );
-}
+};
+
 const styles = StyleSheet.create({
-  button: {
+  body: {
+    backgroundColor: 'honeydew',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10,
-    width: 300,
-    marginTop: 16,
+    flex: 1,
+  },
+  text: {
+    padding: 20,
+    fontSize: 20,
   },
 });
+
 export default SettingsScreen;
