@@ -111,7 +111,7 @@ from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import CodePush from 'react-native-code-push';
 // import HomeScreen from './pages/HomeScreen';
 // import DetailsScreen from './pages/DetailsScreen';
 // import ProfileScreen from './pages/ProfileScreen';
@@ -170,4 +170,4 @@ function App() : JSX.Element {
     </NavigationContainer>
   );
 }
-export default App;
+export default CodePush(App);

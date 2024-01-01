@@ -51,7 +51,7 @@ const {navigation} = props;
               fontWeight:'bold',
               color:'green'
             }}>
-            Your Artists List
+            Your Artists List[Anp]
           </Text> 
           </View>        
         </View>
