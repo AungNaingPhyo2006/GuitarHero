@@ -13,9 +13,13 @@ import {
 import { artists } from '../constants/artist';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { stackScreens } from '../stacks/HomeStack';
+import { useAuth } from '../constants/MyContext';
 type  propsType = NativeStackScreenProps<stackScreens, 'Home'>
 const HomeScreen = (props: propsType) => {
 const {navigation} = props;
+const { user , setUser} = useAuth();
+
+
   const renderArtistItem = ({ item }: { item: { id: number; name: string } }) => (
     <TouchableOpacity 
     onPress={() => {
@@ -51,7 +55,7 @@ const {navigation} = props;
               fontWeight:'bold',
               color:'green'
             }}>
-            Your Artists List[Anp]
+            Your Artists List
           </Text> 
           </View>        
         </View>

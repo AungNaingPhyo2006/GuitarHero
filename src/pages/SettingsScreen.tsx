@@ -11,49 +11,45 @@ import ChordDiagram from '../components/ChordDiagram';
 
 
 const SettingsScreen = ({ route, navigation }: any) => {
-  React.useEffect (()=> {
+  // React.useEffect (()=> {
   
-      Alert.alert(
-        '',
-        'Under Progress!',
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-             // navigation.goBack();
-            },
-          },
-        ],
-        { cancelable: false }
-      );
+  //     Alert.alert(
+  //       '',
+  //       'Under Progress!',
+  //       [
+  //         {
+  //           text: 'OK',
+  //           onPress: () => {
+  //            // navigation.goBack();
+  //           },
+  //         },
+  //       ],
+  //       { cancelable: false }
+  //     );
     
 
    
-   },[navigation])
+  //  },[navigation])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 16 }}>
+      <View style={{ 
+        flex: 1, 
+        // padding: 16 
+        }}>
         <View
           style={{
-            flex: 1,
+            // flex: 1,
             alignItems: 'center',
-            justifyContent: 'center',
+            // justifyContent: 'center',
           }}>
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: 'center',
-              marginBottom: 16
-            }}>
-            You are on Setting Screen
-          </Text>
+        
           <TouchableOpacity
             style={styles.button}
             onPress={
-              () => navigation.navigate('Home')
+              () => navigation.navigate('KaraokeGame')
             }>
-            <Text>Go to Home Tab</Text>
+            <Text style={styles.titleTxt}>Go to Karaoke Game</Text>
           </TouchableOpacity>
           
           <TouchableOpacity
@@ -61,36 +57,30 @@ const SettingsScreen = ({ route, navigation }: any) => {
             onPress={
               () => navigation.navigate('Profile')
             }>
-            <Text>Open Profile Screen</Text>
+            <Text style={styles.titleTxt}>Open Profile Screen</Text>
           </TouchableOpacity>
         </View>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            color: 'grey'
-          }}>
-          React Native Bottom Navigation
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            textAlign: 'center',
-            color: 'grey'
-          }}>
-          www.aboutreact.com
-        </Text>
+      
       </View>
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
+  titleTxt : {
+  fontSize: 18,
+  fontWeight:'800',
+  color:'green'
+  },
   button: {
+    width:'90%',
+    marginHorizontal:12,
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
-    padding: 10,
-    width: 300,
+    padding: 15,
     marginTop: 16,
+    marginBottom:5,
+    borderRadius:5,
+    elevation:5
   },
 });
 export default SettingsScreen;

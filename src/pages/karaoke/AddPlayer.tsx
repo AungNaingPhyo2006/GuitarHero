@@ -1,0 +1,230 @@
+import { Button, StyleSheet, Text, TextInput, View ,FlatList, TouchableOpacity, Alert, ScrollView} from 'react-native'
+import React, { useEffect, useRef, useState , } from 'react'
+import { useAuth } from '../../constants/MyContext';
+import SearchSong from './SearchSong';
+import YoutubePlayer from 'react-native-youtube-iframe';
+
+
+
+const AddPlayer = ({navigation}:any) => {
+    const nameInputRef = useRef(null);
+    const {playerList,setPlayerList} = useAuth();
+    const [songUrl, setSongUrl] = useState(null);
+    const [playerName, setPlayerName] = useState('');
+    // <======Search start=====>
+    const songInputRef = useRef(null);
+    const [songName, setSongName] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(null);
+    const [videoList, setVideoList] = useState([]);
+    const [isSearch, setIsSearch] = useState(false);
+
+
+    const YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3';
+    const YOUTUBE_EMBED = 'https://www.youtube.com/embed';
+    const YOUTUBE_WATCH = 'https://www.youtube.com/watch?v';
+    const YOUTUBE_SEARCH = 'https://www.youtube.com/results?search_query';
+    const API_KEY = 'AIzaSyCpjIdSNvjvsfW8kferxS2-ov93DtpD3PU';
+
+    const createAPIUrl= () =>{
+        const searchTerm = encodeURIComponent(songName.includes('karaoke') ? songName : `${songName} karaoke`);
+        return `${YOUTUBE_API_URL}/search?key=${API_KEY}&part=snippet&limit=10&q=${searchTerm}`;
+      }
+    
+      const createVideoList=(items : any) => {
+        const videos = items.reduce((acc, item ) => {
+          if (item.id.kind === 'youtube#video' && item.id.videoId) {
+            acc.push({
+              id: item.id.videoId,
+              url: `${YOUTUBE_WATCH}=${item.id.videoId}`,
+              embedUrl: `${YOUTUBE_EMBED}/${item.id.videoId}`,
+              title: item?.snippet?.title ? item.snippet.title : 'Karaoke Song',
+            });
+          }
+          return acc;
+        }, []);
+        if (!videos.length) {
+          setMessage('No songs found, try other song name');
+        }
+        setVideoList(videos);
+      }
+
+      const loadVideos = () =>{
+        if(!songName) {
+            return
+        }else{
+        // startLoading();
+        fetch(createAPIUrl())
+          .then((res) => res.json())
+        //   .then(({items}) => console.log('videolist',items))
+          .then(({ items }) => createVideoList(items))
+          .catch(() => setMessage('Oopssomething went wrong! Try again!'))
+        //   .finally(() => setLoading(false));
+        }
+      }
+
+      function handleChange(value:string) {
+        setSongName(value);
+        if (value) {
+            setSongUrl(`${YOUTUBE_SEARCH}=${encodeURIComponent(`${value} karaoke`)}`);
+        } else {
+          setSongUrl(null);
+        }
+      }
+    
+    //   console.log('videoList',videoList)
+    console.log('songUrl',songUrl)
+   //<======Search End=====>
+    const Save = (url : string) => {
+        if (playerName ) {
+            const trimmedPlayerName = playerName.trim();
+
+          // Check if playerName already exists in the playerList
+          const isPlayerNameExists = playerList.some((player) => player.playerName === trimmedPlayerName);
+      
+          if (isPlayerNameExists) {
+            // Handle the case where the playerName already exists (show error message, etc.)
+            Alert.alert('','Player name already exists. Please choose a different name.');
+          } else {
+            // Update the state with the new player if the name doesn't exist
+            setPlayerList((prevList) => [
+              ...prevList,
+              { id: Date.now(), playerName: trimmedPlayerName , song: url ? url :  songUrl},
+            ]);
+      
+            // Clear the input field
+            setPlayerName('');
+            navigation.navigate('KaraokeGame');
+          }
+        }
+      };
+      
+    //   const Save = () => {
+    //     if (playerName) {
+    //       // Update the state with the new player
+    //       setPlayerList((prevList ) => [
+    //         ...prevList,
+    //         { id: Date.now(), playerName: playerName },
+    //       ]);
+    
+    //       // Clear the input field
+    //       setPlayerName('');
+    //       navigation.navigate('KaraokeGame')
+    //     }
+    //   };
+
+   
+  return (
+    <View>
+      <Text style={{...styles.titleTxt, marginHorizontal:12}}>Add Player Name</Text>
+        <TextInput
+        maxLength={40}
+        placeholder="Player name"
+        placeholderTextColor={'red'}
+        value={playerName}
+        onChangeText={ text => setPlayerName(text)}
+        ref={nameInputRef}
+        style={styles.input}
+      />
+
+     <View style={{marginHorizontal:12,flexDirection:'row', borderWidth: 1,justifyContent:'space-between',borderRadius:5}}>
+      <TextInput
+          placeholder="Song name"
+        placeholderTextColor={'red'}
+          ref={songInputRef}
+          value={songName}
+          onChangeText={text => handleChange(text)}
+         // disabled={loading || disabled}
+         style={{ 
+         width:'80%', 
+         height: 40,
+         marginVertical:12,
+         padding: 10,
+         color:'green'
+        }}
+        />
+
+        <TouchableOpacity 
+        onPress={()=> {loadVideos() , setIsSearch(true)}} 
+        style={{marginHorizontal:9,backgroundColor:'red',justifyContent:'center',marginVertical:12,padding:5,borderRadius:5}}>
+            <Text style={{color:'white'}}>Search</Text>
+        </TouchableOpacity>
+    </View>
+
+      <View style={{ marginHorizontal:12,flexDirection:'row', justifyContent:'space-around'}}>
+      <TouchableOpacity
+      onPress={() => navigation.navigate('KaraokeGame')}
+      style={styles.button}>
+        <Text style={{color:'white'}}>Cancle</Text>
+       </TouchableOpacity>
+       <TouchableOpacity
+       disabled={!playerName || !songName || !isSearch}
+        onPress={()=>Save(songUrl)}
+      style={{...styles.button,backgroundColor:!playerName || !songName || !isSearch ? '#DDDDDD' : 'red'}}>
+        <Text style={{color:'white'}}>Save</Text>
+       </TouchableOpacity>
+      </View>
+     
+      <ScrollView style={{marginHorizontal:12,height:'70%',}}>
+        {videoList?.map((video)=> (
+            <View style={{marginBottom:30}}>
+              <Text style={{color:'red',fontWeight:'700',marginBottom:3}}>{video.title}</Text> 
+            <Button title="USE THIS SONG" onPress={()=> Save(video.url)}/>
+             <YoutubePlayer
+             height={250}
+             play={false}
+             videoId={video?.id}
+            />
+            </View>
+        ))}
+      </ScrollView>
+
+    </View>
+  )
+}
+
+export default AddPlayer
+
+const styles = StyleSheet.create({
+    titleTxt : {
+        fontSize: 18,
+        fontWeight:'800',
+        color:'green'
+        },
+    input: {
+        height: 60,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        borderRadius:5,
+        color:'green'
+      },
+      button: {
+        marginHorizontal:12,
+        alignItems: 'center',
+        backgroundColor: 'red',
+        padding: 15,
+        marginTop: 16,
+        marginBottom:5,
+        borderRadius:5,
+        elevation:5
+      },
+})
+
+// const videoList =[
+//     {"embedUrl": "https://www.youtube.com/embed/0g-g8KCsQCs",
+//      "id": "0g-g8KCsQCs", "title": "စိုင်းထီးဆိုင် - နေရာတိုင်းမှာ karaoke lyrics /  ေနရာတိုင္းမွာ / စိုင္းထီးဆိုင္ / Sai Htee Sai", 
+//      "url": "https://www.youtube.com/watch?v=0g-g8KCsQCs"}, 
+//     {"embedUrl": "https://www.youtube.com/embed/kXXteNhbqrc", 
+//     "id": "kXXteNhbqrc", 
+//     "title": "အရင်လိုဘဝမျိုး ရောက်ချင်တယ်   (စိုင်းထီးဆိုင်) | Karaoke with Lyrics", 
+//     "url": "https://www.youtube.com/watch?v=kXXteNhbqrc"}, 
+//     {"embedUrl": "https://www.youtube.com/embed/thA_QV6oHmA", 
+//     "id": "thA_QV6oHmA", "title": "စိုင်းထီးဆိုင် - အချစ်ဆိုတာလျို့ဝှက်ချက်တစ်ခုပါ | instrumental karaoke", 
+//     "url": "https://www.youtube.com/watch?v=thA_QV6oHmA"}, 
+//     {"embedUrl": "https://www.youtube.com/embed/-pjLlHJelO8", 
+//     "id": "-pjLlHJelO8", "title": "စိုင်းထီးဆိုင်  - ဒီထက်ပိုပြီးမတတ်နိုင်ဘူး Karaoke lyrics / ဒီထက္ပိုၿပီးမတတ္ႏိုင္ဘူး/စိုင္းထီးဆိုင္", 
+//     "url": "https://www.youtube.com/watch?v=-pjLlHJelO8"}, 
+//     {"embedUrl": "https://www.youtube.com/embed/MQUqHWF9Jeo", 
+//     "id": "MQUqHWF9Jeo", "title": "အဆုံးအဖြတ် - စိုင်းထီးဆိုင် (Karaoke) Ah Sone Ah Phyart - Sai Htee Saing", 
+//     "url": "https://www.youtube.com/watch?v=MQUqHWF9Jeo"}]

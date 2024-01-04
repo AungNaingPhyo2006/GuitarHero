@@ -120,7 +120,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Home, Music, Music2 } from 'lucide-react-native';
 import HomeStack from './src/stacks/HomeStack';
 import SettingsStack from './src/stacks/SettingsStack';
-
+import { AuthProvider } from "./src/constants/MyContext";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -132,6 +132,7 @@ type TabBarIconProps = {
 
 function App() : JSX.Element {
   return (
+    <AuthProvider>
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Feed"
@@ -163,11 +164,13 @@ function App() : JSX.Element {
           name="SettingsStack"
           component={SettingsStack}
           options={{
-            tabBarLabel: 'Settings',
-            title: 'Setting'
+            // tabBarLabel: 'Settings',
+            // title: 'Setting'
+            headerShown:false
           }} />
       </Tab.Navigator>
     </NavigationContainer>
+    </AuthProvider>
   );
 }
 export default CodePush(App);

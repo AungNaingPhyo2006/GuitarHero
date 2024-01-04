@@ -3,19 +3,31 @@ import React from 'react'
 import SettingsScreen from '../pages/SettingsScreen';
 import ProfileScreen from '../pages/ProfileScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import KaraokeGame from '../pages/karaoke/KaraokeGame';
+import AddPlayer from '../pages/karaoke/AddPlayer';
 const Stack = createNativeStackNavigator();
 
 const SettingsStack = () => {
     return (
         <Stack.Navigator
           initialRouteName="Settings"
-          screenOptions={{headerShown: false}}>
+          screenOptions={{
+            // headerShown: false,
+            headerTitleAlign:'center',
+            headerStyle: { backgroundColor:'skyblue'}
+            }}>
           <Stack.Screen
             name="Settings"
             component={SettingsScreen} />
           <Stack.Screen
             name="Profile"
             component={ProfileScreen} />
+             <Stack.Screen
+            name="KaraokeGame"
+            component={KaraokeGame} />
+              <Stack.Screen
+            name="AddPlayer"
+            component={AddPlayer} />
         </Stack.Navigator>
       );
 }

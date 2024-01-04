@@ -3,12 +3,13 @@ import { View, Text, SafeAreaView , TouchableOpacity, StyleSheet, FlatList} from
 import { stackScreens } from '../stacks/HomeStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { artists } from '../constants/artist';
+import { useAuth } from '../constants/MyContext';
 
 type propsType = NativeStackScreenProps<stackScreens, "Details">
 const DetailsScreen = (props : propsType)  => {
   const {navigation, route} = props;
   const {artistName} = route.params;
-
+  const { user , setUser} = useAuth();
 
   // Define types for the data structure
   type Song = {
