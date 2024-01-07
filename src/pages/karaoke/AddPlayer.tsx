@@ -140,7 +140,9 @@ const AddPlayer = ({navigation}:any) => {
          height: 40,
          marginVertical:12,
          padding: 10,
-         color:'green'
+         color:'green',
+         fontSize:16,
+         fontWeight:'800'
         }}
         />
 
@@ -197,7 +199,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderRadius:5,
-        color:'green'
+        color:'green',
+        fontSize:16,
+        fontWeight:'800'
       },
       button: {
         marginHorizontal:12,

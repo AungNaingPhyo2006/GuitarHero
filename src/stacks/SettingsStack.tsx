@@ -5,6 +5,7 @@ import ProfileScreen from '../pages/ProfileScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import KaraokeGame from '../pages/karaoke/KaraokeGame';
 import AddPlayer from '../pages/karaoke/AddPlayer';
+import GamePlay from '../pages/karaoke/GamePlay';
 const Stack = createNativeStackNavigator();
 
 const SettingsStack = () => {
@@ -28,6 +29,9 @@ const SettingsStack = () => {
               <Stack.Screen
             name="AddPlayer"
             component={AddPlayer} />
+             <Stack.Screen
+            name="GamePlay"
+            component={GamePlay} />
         </Stack.Navigator>
       );
 }
