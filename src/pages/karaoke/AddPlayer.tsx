@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState , } from 'react'
 import { useAuth } from '../../constants/MyContext';
 import SearchSong from './SearchSong';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import { Search } from 'lucide-react-native';
 
 
 
@@ -142,14 +143,15 @@ const AddPlayer = ({navigation}:any) => {
          padding: 10,
          color:'green',
          fontSize:16,
-         fontWeight:'800'
+         fontWeight:'300'
         }}
         />
 
-        <TouchableOpacity 
+        
+      <TouchableOpacity 
         onPress={()=> {loadVideos() , setIsSearch(true)}} 
-        style={{marginHorizontal:9,backgroundColor:'red',justifyContent:'center',marginVertical:12,padding:5,borderRadius:5}}>
-            <Text style={{color:'white'}}>Search</Text>
+        style={{marginHorizontal:9,justifyContent:'center',marginVertical:12,padding:5,borderRadius:5}}>
+            <Search size={24} color='red' />
         </TouchableOpacity>
     </View>
 
@@ -201,7 +203,7 @@ const styles = StyleSheet.create({
         borderRadius:5,
         color:'green',
         fontSize:16,
-        fontWeight:'800'
+        fontWeight:'300'
       },
       button: {
         marginHorizontal:12,

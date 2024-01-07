@@ -1,11 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View , FlatList ,Button , Linking} from 'react-native'
 import React, { useState ,useEffect} from 'react'
 import { useAuth } from '../../constants/MyContext';
+import { Mic } from 'lucide-react-native';
 
 const GamePlay = ({navigation}: any) => {
   const {playerList,setPlayerList} = useAuth();
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [shuffling, setShuffling] = useState(false);
+
 
   const shufflePlayers = () => {
     if (playerList.length > 0 && !shuffling) {
@@ -72,7 +74,6 @@ const GamePlay = ({navigation}: any) => {
   const deletePlayer = (id: number) => {
     setPlayerList((prevList) => prevList.filter((player) => player.id !== id));
   };
-
   // console.warn('currentPlayer', currentPlayer)
   return (
     <View>
@@ -80,11 +81,16 @@ const GamePlay = ({navigation}: any) => {
         data={playerList}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'pink', margin: 5, padding: 10, borderRadius: 5 }}>
-            <TouchableOpacity onPress={()=>openLink(item.song)} style={{marginHorizontal:12,padding:9,width:'70%'}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'pink', margin: 11, padding: 10, borderRadius: 5 }}>
+            <TouchableOpacity style={{marginHorizontal:12,padding:9,width:'70%'}}>
             <Text style={{color:'red', fontSize:18,fontWeight:'800'}}> ({index + 1})  {item.playerName}</Text>
             </TouchableOpacity>
-            <Button title="Sing" onPress={() => {openLink(item.song) ; deletePlayer(item.id)}}  />
+            {index === 0 && currentPlayer?.id === playerList[0].id ?
+              (
+               <TouchableOpacity onPress={() => {openLink(item.song)  ;deletePlayer(item.id) }}   >
+              <Mic size={24} color='green'/>
+              </TouchableOpacity>):(<></>)
+            }
           </View>
         )}
       />

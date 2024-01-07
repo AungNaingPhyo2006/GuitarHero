@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View ,FlatList, Button, Linking} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../constants/MyContext'
-import { PlusCircle } from 'lucide-react-native';
+import {  PlusCircle,  Trash2 } from 'lucide-react-native';
 
 const KaraokeGame = ({navigation}: any) => {
     const {playerList,setPlayerList} = useAuth();
@@ -29,25 +29,29 @@ const KaraokeGame = ({navigation}: any) => {
     </View>
   
     <TouchableOpacity style={{...styles.button,flexDirection:'row', justifyContent:'space-evenly'}} onPress={()=>{ navigation.navigate('AddPlayer') }}>
-        <Text style={{...styles.titleTxt, alignSelf:'center'}}>Add Player</Text>
+        <Text style={{...styles.titleTxt, alignSelf:'center'}}>Please Add Players</Text>
         <PlusCircle size={24} color='blue'/>
     </TouchableOpacity>
      {playerList.length == 0 ? (
         <Text style={{...styles.titleTxt,color:'blue', alignSelf:'center', marginVertical:100}}>No player Yet! </Text>
     ) : (<></>)}
+
+    <View style={{margin:20}}>
     <FlatList
         data={playerList}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'pink', margin: 5, padding: 10, borderRadius: 5 }}>
-            <TouchableOpacity onPress={()=>openLink(item.song)} style={{marginHorizontal:12,padding:9,width:'70%'}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center',marginTop:9, backgroundColor: 'pink',  padding: 10, borderRadius: 5 }}>
+            <TouchableOpacity onPress={()=>openLink(item.song)} style={{padding:9,width:'70%'}}>
             <Text style={{color:'red', fontSize:18,fontWeight:'800'}}>{item.playerName}</Text>
             </TouchableOpacity>
-            <Button title="Delete" onPress={() => deletePlayer(item.id)} />
+            <TouchableOpacity  onPress={() => deletePlayer(item.id)}>
+            <Trash2 size={24} color='red'/>
+            </TouchableOpacity>
           </View>
         )}
       />
-   
+   </View>
 
     {playerList.length > 1 ?
      (  
