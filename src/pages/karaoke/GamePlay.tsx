@@ -75,6 +75,7 @@ const GamePlay = ({navigation}: any) => {
     setPlayerList((prevList) => prevList.filter((player) => player.id !== id));
   };
   // console.warn('currentPlayer', currentPlayer)
+  console.warn('player', playerList)
   return (
     <View>
       <FlatList
@@ -85,19 +86,27 @@ const GamePlay = ({navigation}: any) => {
             <TouchableOpacity style={{marginHorizontal:12,padding:9,width:'70%'}}>
             <Text style={{color:'red', fontSize:18,fontWeight:'800'}}> ({index + 1})  {item.playerName}</Text>
             </TouchableOpacity>
-            {index === 0 && currentPlayer?.id === playerList[0].id ?
-              (
+            
                <TouchableOpacity onPress={() => {openLink(item.song)  ;deletePlayer(item.id) }}   >
               <Mic size={24} color='green'/>
-              </TouchableOpacity>):(<></>)
-            }
+              </TouchableOpacity>
+           
           </View>
         )}
       />
     
-      <TouchableOpacity style={styles.button} onPress={shufflePlayers}>
+   
+{playerList.length > 0 ? (
+      <TouchableOpacity style={{...styles.button,width:'30%', alignSelf:'center'}} onPress={shufflePlayers}>
       <Text style={{ ...styles.titleTxt, alignSelf: 'center' }}>Start</Text>
      </TouchableOpacity>
+) : (
+  <TouchableOpacity style={{...styles.button, alignSelf:'center'}} onPress={()=> navigation.navigate('KaraokeGame')}>
+  <Text style={{ ...styles.titleTxt, alignSelf: 'center' }}>Karaoke Party is End!</Text>
+ </TouchableOpacity>
+)}
+     
+
     
     </View>
   )

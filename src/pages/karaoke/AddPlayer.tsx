@@ -4,7 +4,7 @@ import { useAuth } from '../../constants/MyContext';
 import SearchSong from './SearchSong';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { Search } from 'lucide-react-native';
-
+import useIsOnline from '../../constants/useIsOnline';
 
 
 const AddPlayer = ({navigation}:any) => {
@@ -12,6 +12,8 @@ const AddPlayer = ({navigation}:any) => {
     const {playerList,setPlayerList} = useAuth();
     const [songUrl, setSongUrl] = useState(null);
     const [playerName, setPlayerName] = useState('');
+    const isOnline = useIsOnline();
+    // console.warn('isOnline',isOnline)
     // <======Search start=====>
     const songInputRef = useRef(null);
     const [songName, setSongName] = useState('');
@@ -51,7 +53,23 @@ const AddPlayer = ({navigation}:any) => {
       }
 
       const loadVideos = () =>{
-        if(!songName) {
+        if(!isOnline){
+          Alert.alert(
+            '',
+            'Your Internet Connection is very poor!',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              { text: 'OK', onPress: () => navigation.navigate('KaraokeGame') },
+            ],
+            { cancelable: false }
+          );
+          return
+        }else{
+          if(!songName) {
             return
         }else{
         // startLoading();
@@ -62,9 +80,12 @@ const AddPlayer = ({navigation}:any) => {
           .catch(() => setMessage('Oopssomething went wrong! Try again!'))
         //   .finally(() => setLoading(false));
         }
+
+        }
+       
       }
 
-      function handleChange(value:string) {
+      const handleChange=(value:string)=> {
         setSongName(value);
         if (value) {
             setSongUrl(`${YOUTUBE_SEARCH}=${encodeURIComponent(`${value} karaoke`)}`);
@@ -77,6 +98,22 @@ const AddPlayer = ({navigation}:any) => {
     console.log('songUrl',songUrl)
    //<======Search End=====>
     const Save = (url : string) => {
+      if(!isOnline){
+        Alert.alert(
+          '',
+          'Your Internet Connection is very poor!',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            { text: 'OK', onPress: () => navigation.navigate('KaraokeGame') },
+          ],
+          { cancelable: false }
+        );
+        return
+      }else{
         if (playerName ) {
             const trimmedPlayerName = playerName.trim();
 
@@ -98,6 +135,7 @@ const AddPlayer = ({navigation}:any) => {
             navigation.navigate('KaraokeGame');
           }
         }
+      }
       };
       
     //   const Save = () => {
@@ -162,9 +200,9 @@ const AddPlayer = ({navigation}:any) => {
         <Text style={{color:'white'}}>Cancle</Text>
        </TouchableOpacity>
        <TouchableOpacity
-       disabled={!playerName || !songName || !isSearch}
+       disabled={!playerName || !songName || !isSearch || !isOnline}
         onPress={()=>Save(songUrl)}
-      style={{...styles.button,backgroundColor:!playerName || !songName || !isSearch ? '#DDDDDD' : 'red'}}>
+      style={{...styles.button,backgroundColor:!playerName || !songName || !isSearch || !isOnline ? '#DDDDDD' : 'red'}}>
         <Text style={{color:'white'}}>Save</Text>
        </TouchableOpacity>
       </View>

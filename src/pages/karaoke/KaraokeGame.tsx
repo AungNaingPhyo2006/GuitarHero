@@ -2,10 +2,11 @@ import { StyleSheet, Text, TouchableOpacity, View ,FlatList, Button, Linking} fr
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../constants/MyContext'
 import {  PlusCircle,  Trash2 } from 'lucide-react-native';
+import useIsOnline from '../../constants/useIsOnline';
 
 const KaraokeGame = ({navigation}: any) => {
     const {playerList,setPlayerList} = useAuth();
-
+    const isOnline = useIsOnline();
     const deletePlayer = (id: number) => {
         setPlayerList((prevList) => prevList.filter((player) => player.id !== id));
       };
@@ -53,7 +54,7 @@ const KaraokeGame = ({navigation}: any) => {
       />
    </View>
 
-    {playerList.length > 1 ?
+    {playerList.length > 1  && isOnline ?
      (  
       <View style={{marginHorizontal:15, padding:5}}> 
       <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('GamePlay')}>
