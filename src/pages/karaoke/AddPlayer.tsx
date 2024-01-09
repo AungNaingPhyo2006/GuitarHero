@@ -154,8 +154,8 @@ const AddPlayer = ({navigation}:any) => {
 
    
   return (
-    <View>
-      <Text style={{...styles.titleTxt, marginHorizontal:12}}>Add Player Name</Text>
+    <View style={{backgroundColor:'skyblue'}}>
+      <Text style={{...styles.titleTxt, marginHorizontal:12,marginTop:24}}>Add Player Name</Text>
         <TextInput
         maxLength={40}
         placeholder="Player name"
@@ -193,7 +193,7 @@ const AddPlayer = ({navigation}:any) => {
         </TouchableOpacity>
     </View>
 
-      <View style={{ marginHorizontal:12,flexDirection:'row', justifyContent:'space-around'}}>
+      <View style={{ marginHorizontal:12,flexDirection:'row', justifyContent:'space-around',}}>
       <TouchableOpacity
       onPress={() => navigation.navigate('KaraokeGame')}
       style={styles.button}>
@@ -206,6 +206,9 @@ const AddPlayer = ({navigation}:any) => {
         <Text style={{color:'white'}}>Save</Text>
        </TouchableOpacity>
       </View>
+      {videoList.length > 0 ? (
+       <View style={{borderWidth:1,marginVertical:9, marginHorizontal:15}}></View>
+      ) :(<></>)}
      
       <ScrollView style={{marginHorizontal:12,height:'70%',}}>
         {videoList?.map((video)=> (

@@ -107,7 +107,7 @@ import * as React from 'react';
 import 
  MaterialCommunityIcons
 from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -121,6 +121,13 @@ import { Home, Music, Music2 } from 'lucide-react-native';
 import HomeStack from './src/stacks/HomeStack';
 import SettingsStack from './src/stacks/SettingsStack';
 import { AuthProvider } from "./src/constants/MyContext";
+
+
+// Ignore log notification by message:
+LogBox.ignoreLogs(['Warning: ...']);
+
+// Ignore all log notifications:
+LogBox.ignoreAllLogs();
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
