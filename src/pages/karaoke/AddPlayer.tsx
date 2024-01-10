@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState , } from 'react'
 import { useAuth } from '../../constants/MyContext';
 import SearchSong from './SearchSong';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import { Search } from 'lucide-react-native';
+import { Import, Search } from 'lucide-react-native';
 import useIsOnline from '../../constants/useIsOnline';
 
 
@@ -53,6 +53,7 @@ const AddPlayer = ({navigation}:any) => {
       }
 
       const loadVideos = () =>{
+        setIsSearch(true)
         if(!isOnline){
           Alert.alert(
             '',
@@ -95,7 +96,7 @@ const AddPlayer = ({navigation}:any) => {
       }
     
     //   console.log('videoList',videoList)
-    console.log('songUrl',songUrl)
+    // console.log('songUrl',songUrl)
    //<======Search End=====>
     const Save = (url : string) => {
       if(!isOnline){
@@ -168,7 +169,7 @@ const AddPlayer = ({navigation}:any) => {
 
      <View style={{marginHorizontal:12,flexDirection:'row', borderWidth: 1,justifyContent:'space-between',borderRadius:5}}>
       <TextInput
-          placeholder="Song name"
+          placeholder="Song name or artist name"
         placeholderTextColor={'red'}
           ref={songInputRef}
           value={songName}
@@ -187,17 +188,18 @@ const AddPlayer = ({navigation}:any) => {
 
         
       <TouchableOpacity 
-        onPress={()=> {loadVideos() , setIsSearch(true)}} 
+        onPress={()=> {isSearch ?  Save(songUrl): loadVideos()} } 
         style={{marginHorizontal:9,justifyContent:'center',marginVertical:12,padding:5,borderRadius:5}}>
-            <Search size={24} color='red' />
+           {isSearch ? (<Import size={28} color='red' /> ) 
+           : (<Search size={28} color='red' />)} 
         </TouchableOpacity>
     </View>
 
-      <View style={{ marginHorizontal:12,flexDirection:'row', justifyContent:'space-around',}}>
+   {/*   <View style={{ marginHorizontal:12,flexDirection:'row', justifyContent:'space-around',}}>
       <TouchableOpacity
       onPress={() => navigation.navigate('KaraokeGame')}
       style={styles.button}>
-        <Text style={{color:'white'}}>Cancle</Text>
+        <Text style={{color:'white'}}>Cancel</Text>
        </TouchableOpacity>
        <TouchableOpacity
        disabled={!playerName || !songName || !isSearch || !isOnline}
@@ -206,6 +208,7 @@ const AddPlayer = ({navigation}:any) => {
         <Text style={{color:'white'}}>Save</Text>
        </TouchableOpacity>
       </View>
+    */} 
       {videoList.length > 0 ? (
        <View style={{borderWidth:1,marginVertical:9, marginHorizontal:15}}></View>
       ) :(<></>)}

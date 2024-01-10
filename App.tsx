@@ -122,12 +122,10 @@ import HomeStack from './src/stacks/HomeStack';
 import SettingsStack from './src/stacks/SettingsStack';
 import { AuthProvider } from "./src/constants/MyContext";
 
-
-// Ignore log notification by message:
-LogBox.ignoreLogs(['Warning: ...']);
-
-// Ignore all log notifications:
-LogBox.ignoreAllLogs();
+let codePushOptions = {
+  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+  installMode: CodePush.InstallMode.IMMEDIATE,
+};
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -138,6 +136,14 @@ type TabBarIconProps = {
 };
 
 function App() : JSX.Element {
+  React.useEffect(()=>{
+    // Ignore log notification by message:
+    LogBox.ignoreLogs(['Warning: ...']);
+    
+    // Ignore all log notifications:
+    LogBox.ignoreAllLogs();
+    },[])
+
   return (
     <AuthProvider>
     <NavigationContainer>
@@ -150,15 +156,15 @@ function App() : JSX.Element {
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
           tabBarIcon: ({ focused, color, size }: TabBarIconProps) => {
-          if (route.name === 'HomeStack') {
+          if (route.name === 'Home1') {
             return focused? <Home size={size} color='blue'/> :<Home size={size} color={color}/>
-          } else if (route.name === 'SettingsStack') {
+          } else if (route.name === 'Settings') {
             return focused? <Music size={size} color='blue'/> :<Music size={size} color={color}/>
           }
           }
         })}>
         <Tab.Screen
-          name="HomeStack"
+          name="Home1"
           component={HomeStack}
           options={{
             // tabBarLabel: 'Home',
@@ -168,7 +174,7 @@ function App() : JSX.Element {
           }}  
           />
         <Tab.Screen
-          name="SettingsStack"
+          name="Settings"
           component={SettingsStack}
           options={{
             // tabBarLabel: 'Settings',
@@ -180,4 +186,4 @@ function App() : JSX.Element {
     </AuthProvider>
   );
 }
-export default CodePush(App);
+export default CodePush(codePushOptions)(App);

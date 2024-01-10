@@ -31,7 +31,7 @@ const GamePlay = ({navigation}: any) => {
       setTimeout(() => {
         setShuffling(false);
         clearInterval(intervalId);
-      }, 5000);
+      }, 3000);
     }
   };
 
@@ -87,6 +87,19 @@ const GamePlay = ({navigation}: any) => {
   // console.warn('player', playerList)
   return (
     <View style={{marginTop:20,marginBottom:200}}>
+      {currentPlayer == null  || playerList.length == 0 ? (
+         <View style={{alignSelf:'center'}}>
+         <Text style={{color:'red', fontSize:18, fontWeight:'600'}}>Whose turn to sing now?</Text>
+      </View>
+      ) : (
+       <View style={{alignSelf:'center'}}>
+          <Text style={{color:'red', fontSize:18, fontWeight:'600'}}>It's 
+          <Text style={{color:'blue', fontSize:18, fontWeight:'400'}}> 
+          { playerList?.length == 1 ? ' G.O.A.T' : currentPlayer?.playerName  } 's  </Text>
+          turn to sing.</Text>
+        </View>
+      )}
+     
       <FlatList
       showsVerticalScrollIndicator={false}
         data={playerList}
@@ -94,10 +107,14 @@ const GamePlay = ({navigation}: any) => {
         renderItem={({ item, index }) => (
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'pink', margin: 11, padding: 10, borderRadius: 5 }}>
             <TouchableOpacity style={{ flexDirection:'row',marginHorizontal:12,padding:9,width:'70%'}}>
-            <View style={{width:25,height:25,backgroundColor:'blue',alignItems:'center',justifyContent:'center',borderRadius:50}}>
-            <Text style={{color:'white', fontSize:18,fontWeight:'600'}}>{index + 1}</Text>
+            <View style={{width:25,height:25,
+              backgroundColor:currentPlayer?.id === item.id || playerList.length == 1 ? 'blue':'white',
+              alignItems:'center',justifyContent:'center',borderRadius:50}}>
+            <Text style={{color: currentPlayer?.id === item.id || playerList.length == 1 ?'white' :'blue',
+             fontSize:18,fontWeight:'600'}}>{index + 1}</Text>
             </View>
-            <Text style={{color:'red', fontSize:18,fontWeight:'800'}}> {item.playerName}</Text>
+            <Text style={{color: currentPlayer?.id === item.id || playerList.length == 1 ? 'blue' :'red', 
+            fontSize:18,fontWeight:'800'}}> {item.playerName}</Text>
             </TouchableOpacity>
             
                <TouchableOpacity
