@@ -20,11 +20,10 @@ const AnpModal = ({modalVisible, setModalVisible}: {modalVisible:boolean, setMod
               onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.textStyle}>X</Text>
             </TouchableOpacity>
-            <ScrollView style={{}}>
+            <ScrollView style={{}} showsVerticalScrollIndicator={false}>
             <Text style={{...styles.modalText,textAlign:'justify',}}>{myText1}</Text>
             <Text style={{...styles.modalText,textAlign:'justify',}}>{myText2}</Text>
-            </ScrollView>
-           
+            </ScrollView>          
           </View>
         </View>
       </Modal>
@@ -77,7 +76,6 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
-    textAlign: 'center',
     color:'blue',
     fontSize:18,
   },

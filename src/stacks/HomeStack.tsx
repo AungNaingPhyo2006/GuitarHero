@@ -10,7 +10,7 @@ export type ScreenOptions = {
 };
 
 export type stackScreens = {
-    Home : undefined,
+    HomeScreen : undefined,
     Details : {artistName : string ,}, 
     SongChords : { youtube: string[] ,note: string[],pattern:string, intro:string,chords : string[] , lyrics : string[],} , 
 }
@@ -19,7 +19,7 @@ const Stack = createNativeStackNavigator<stackScreens>();
 const HomeStack = () => {
     return (
         <Stack.Navigator
-          initialRouteName="Home"
+          initialRouteName="HomeScreen"
          screenOptions={{
           // headerShown: false
           headerTitleAlign:'center',
@@ -27,7 +27,7 @@ const HomeStack = () => {
         }}
           >
           <Stack.Screen
-            name="Home"
+            name="HomeScreen"
             component={HomeScreen} 
          />
           <Stack.Screen

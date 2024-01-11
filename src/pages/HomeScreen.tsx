@@ -14,7 +14,7 @@ import { artists } from '../constants/artist';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { stackScreens } from '../stacks/HomeStack';
 import { useAuth } from '../constants/MyContext';
-type  propsType = NativeStackScreenProps<stackScreens, 'Home'>
+type  propsType = NativeStackScreenProps<stackScreens, 'HomeScreen'>
 const HomeScreen = (props: propsType) => {
 const {navigation} = props;
 const { user , setUser} = useAuth();

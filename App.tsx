@@ -136,13 +136,13 @@ type TabBarIconProps = {
 };
 
 function App() : JSX.Element {
-  React.useEffect(()=>{
-    // Ignore log notification by message:
-    LogBox.ignoreLogs(['Warning: ...']);
+  // React.useEffect(()=>{
+  //   // Ignore log notification by message:
+  //   LogBox.ignoreLogs(['Warning: ...']);
     
-    // Ignore all log notifications:
-    LogBox.ignoreAllLogs();
-    },[])
+  //   // Ignore all log notifications:
+  //   LogBox.ignoreAllLogs();
+  //   },[])
 
   return (
     <AuthProvider>
@@ -156,7 +156,7 @@ function App() : JSX.Element {
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
           tabBarIcon: ({ focused, color, size }: TabBarIconProps) => {
-          if (route.name === 'Home1') {
+          if (route.name === 'Home') {
             return focused? <Home size={size} color='blue'/> :<Home size={size} color={color}/>
           } else if (route.name === 'Settings') {
             return focused? <Music size={size} color='blue'/> :<Music size={size} color={color}/>
@@ -164,7 +164,7 @@ function App() : JSX.Element {
           }
         })}>
         <Tab.Screen
-          name="Home1"
+          name="Home"
           component={HomeStack}
           options={{
             // tabBarLabel: 'Home',

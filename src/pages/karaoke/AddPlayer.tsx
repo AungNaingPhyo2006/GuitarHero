@@ -92,9 +92,10 @@ const AddPlayer = ({navigation}:any) => {
             setSongUrl(`${YOUTUBE_SEARCH}=${encodeURIComponent(`${value} karaoke`)}`);
         } else {
           setSongUrl(null);
+        setIsSearch(false)
         }
       }
-    
+    // console.warn('songName',songName)
     //   console.log('videoList',videoList)
     // console.log('songUrl',songUrl)
    //<======Search End=====>

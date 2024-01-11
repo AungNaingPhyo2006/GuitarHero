@@ -11,14 +11,14 @@ const Stack = createNativeStackNavigator();
 const SettingsStack = () => {
     return (
         <Stack.Navigator
-          initialRouteName="Settings"
+          initialRouteName="SettingsScreen"
           screenOptions={{
             // headerShown: false,
             headerTitleAlign:'center',
             headerStyle: { backgroundColor:'skyblue'}
             }}>
           <Stack.Screen
-            name="Settings"
+            name="SettingsScreen"
             component={SettingsScreen} />
           <Stack.Screen
             name="Profile"
