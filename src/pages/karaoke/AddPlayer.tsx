@@ -1,9 +1,9 @@
-import { Button, StyleSheet, Text, TextInput, View ,FlatList, TouchableOpacity, Alert, ScrollView} from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View ,FlatList, TouchableOpacity, Alert, ScrollView, ActivityIndicator} from 'react-native'
 import React, { useEffect, useRef, useState , } from 'react'
 import { useAuth } from '../../constants/MyContext';
 import SearchSong from './SearchSong';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import { Import, Search } from 'lucide-react-native';
+import { Import, MonitorPlay, Search } from 'lucide-react-native';
 import useIsOnline from '../../constants/useIsOnline';
 
 
@@ -73,13 +73,13 @@ const AddPlayer = ({navigation}:any) => {
           if(!songName) {
             return
         }else{
-        // startLoading();
+        setLoading(true);
         fetch(createAPIUrl())
           .then((res) => res.json())
         //   .then(({items}) => console.log('videolist',items))
           .then(({ items }) => createVideoList(items))
           .catch(() => setMessage('Oopssomething went wrong! Try again!'))
-        //   .finally(() => setLoading(false));
+          .finally(() => setLoading(false));
         }
 
         }
@@ -213,21 +213,43 @@ const AddPlayer = ({navigation}:any) => {
       {videoList.length > 0 ? (
        <View style={{borderWidth:1,marginVertical:9, marginHorizontal:15}}></View>
       ) :(<></>)}
-     
-      <ScrollView style={{marginHorizontal:12,height:'70%',}}>
-        {videoList?.map((video)=> (
-            <View style={{marginBottom:30}}>
-              <Text style={{color:'red',fontWeight:'700',marginBottom:3}}>{video.title}</Text> 
-            <Button title="USE THIS SONG" onPress={()=> Save(video.url)}/>
-             <YoutubePlayer
-             height={250}
-             play={false}
-             videoId={video?.id}
-            />
+      
+     {loading ? (
+      <View style={{marginHorizontal:12,height:'70%',}}>
+         <ActivityIndicator size="large"  animating={loading} color={'#0000ff'}/>
+      </View>
+     ) : (
+      <ScrollView style={{marginHorizontal:12,height:'70%',}} showsVerticalScrollIndicator={false}>
+        {videoList?.map((video ,index)=> (
+            <View key={index} style={{marginBottom:30}}>
+              <View style={{flexDirection:'row'}}>
+                <View style={{marginTop:0,width:30,height:30 ,borderWidth:1,backgroundColor:'red',borderRadius:50,justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:'white',fontWeight:'700',}}>{index+1}</Text> 
+                </View>
+                <View style={{width:'100%',height:30, justifyContent:'center',marginHorizontal:9}}>
+                <Text style={{color:'red',fontWeight:'700',marginBottom:3}}>
+                {video.title.length > 35 ? `${video.title.slice(0, 35)}...` : video.title}
+                </Text> 
+                </View>
+              </View>
+              <TouchableOpacity style={{alignItems:'center', backgroundColor:'cyan',padding:12, borderTopRightRadius:5,borderTopLeftRadius:5}} onPress={()=> Save(video.url)}>
+                  <View style={{flexDirection:'row',}}>
+                  <MonitorPlay size={24} color='white' />
+                  <Text style={{ fontSize:16,color:'yellow',fontWeight:'700',marginHorizontal:12}}>USE THIS SONG</Text>
+                  </View>
+                  
+              </TouchableOpacity>
+              <View style={{ borderRadius: 10, overflow: 'hidden' }}>
+                <YoutubePlayer
+                  height={250}
+                  play={false}
+                  videoId={video?.id}
+                />
+              </View>
             </View>
         ))}
       </ScrollView>
-
+        )}
     </View>
   )
 }

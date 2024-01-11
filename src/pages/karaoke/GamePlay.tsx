@@ -94,8 +94,8 @@ const GamePlay = ({navigation}: any) => {
       ) : (
        <View style={{alignSelf:'center'}}>
           <Text style={{color:'red', fontSize:18, fontWeight:'600'}}>It's 
-          <Text style={{color:'blue', fontSize:18, fontWeight:'400'}}> 
-          { playerList?.length == 1 ? ' G.O.A.T' : currentPlayer?.playerName  } 's  </Text>
+           <Text style={{color:'blue', fontSize:18, fontWeight:'400'}}> 
+          [{ playerList?.length == 1 ? ' G.O.A.T' : currentPlayer?.playerName  }]'s  </Text>
           turn to sing.</Text>
         </View>
       )}
