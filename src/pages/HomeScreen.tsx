@@ -41,10 +41,10 @@ const { user , setUser} = useAuth();
             flexDirection:'row',
             justifyContent:'center'
           }}>
-            <Image
+            {/* <Image
             source={require('../assets/images/anp.jpg')}
             style={{width:50,height:50, borderRadius:30,marginHorizontal:12}}
-            />
+            /> */}
             <View style={{justifyContent:'center',alignItems:'center'}}>
           <Text
             style={{
