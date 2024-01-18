@@ -971,5 +971,24 @@ export const artists : Artist[] = [
     
       ],
     },
+    {
+      id: 13,
+      name: 'ထူးအိမ်သင်',
+      songs: [
+        { id:  1301, title: 'အမေ့အိမ်',
+        pattern : 'D DU DU',
+        intro : 'G G C C G D C D',
+        note: ['Solo (G C G D)2 G G7'],
+        youtube:[
+          'https://www.youtube.com/watch?v=KqUtDCVdZDY',    
+      ],
+         lyrics: [
+          '(V1)မကြာမီ လာမည်',  
+        ], chords: [
+          'G...', 
+        ] },
+    
+      ],
+    },
   ];
   
