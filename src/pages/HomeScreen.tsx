@@ -34,7 +34,7 @@ const { user , setUser} = useAuth();
 // <=======================>
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1,  marginHorizontal:12,}}>
+      <View style={{ flex: 1,  marginHorizontal:0,backgroundColor:'cyan'}}>
         <View
           style={{
             marginVertical:9,
@@ -60,6 +60,7 @@ const { user , setUser} = useAuth();
           </View>        
         </View>
         <FlatList
+      showsVerticalScrollIndicator={false}
       data={artists}
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderArtistItem}

@@ -30,7 +30,7 @@ const DetailsScreen = (props : propsType)  => {
   // <==============>
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 , padding: 16}}>
+      <View style={{ flex: 1 , padding: 16, backgroundColor:'skyblue'}}>
         <View
           style={{
        marginVertical:9

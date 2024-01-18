@@ -74,18 +74,18 @@ const spinStyle = {
 );
 
   return (
-    <View style={{marginHorizontal:12, marginTop:5}}>
+    <View style={{marginHorizontal:0, marginTop:0, backgroundColor:'skyblue'}}>
       
     <ScrollView showsVerticalScrollIndicator={false} style={{marginVertical:5, marginLeft:9,padding:5, borderBottomWidth: 1,borderBottomColor: '#ddd',}}>
     <Text style={{color:'skyblue', fontWeight:'bold', textAlign:'justify'}}>Pattern: {pattern ? pattern : 'coming soon'}</Text>
-    <Text style={{color:'orange',fontWeight:'bold',textAlign:'justify', marginVertical:5}}>Intro: {intro? intro : 'coming soon'}</Text>
+    <Text style={{color:'blue',fontWeight:'400',textAlign:'justify', marginVertical:5}}>Intro: {intro? intro : 'coming soon'}</Text>
   
   
     <View style={{marginBottom:12}}>
     <TouchableOpacity 
     onPress={handlePress}
      style={styles.optionBtn}>
-      <Text style={{color:'red', fontSize:16, marginHorizontal:12, fontWeight:'bold'}}>{showOptions?'Hide  Tips':'Show Tips'}</Text>
+      <Text style={{color:'gray', fontSize:16, marginHorizontal:12, fontWeight:'bold'}}>{showOptions?'Hide  Tips':'Show Tips'}</Text>
       <Animated.View style={spinStyle}>
       <ChevronDown size={20} color='white'/>
       </Animated.View>
@@ -99,8 +99,8 @@ const spinStyle = {
     </View>
     <View style={{borderWidth:0.5, borderColor:'red',marginTop:12, marginHorizontal:12}}></View>
     {youtube.map((youtubeLink,index)=>(
-      <TouchableOpacity key={index} style={{alignSelf:'center',marginVertical:9,padding:5, borderWidth:1, borderRadius:5,backgroundColor:'white',elevation:3}} onPress={()=>openYouTubeLink(youtubeLink)}>
-        <Text style={{color:'blue',fontWeight:'bold',  }}>Tutorial Video ({index + 1})</Text>
+      <TouchableOpacity key={index} style={{alignSelf:'center',marginVertical:9,padding:5, borderWidth:1, borderRadius:5,backgroundColor:'blue',elevation:3}} onPress={()=>openYouTubeLink(youtubeLink)}>
+        <Text style={{color:'white',fontWeight:'bold',  }}>Tutorial Video ({index + 1})</Text>
     </TouchableOpacity>
     ))}
     
@@ -142,12 +142,13 @@ const styles = StyleSheet.create({
   },
   lyricText: {
     fontSize: 16,
-    color:'green',
+    color:'blue',
   fontStyle:'italic',
-  textAlign:'justify'
+  textAlign:'justify',
+  fontWeight:'600'
   },
   optionBtn : {
-    backgroundColor:'cyan' ,
+    backgroundColor:'white' ,
     padding:5, 
     marginBottom:11,
     borderRadius: 5 , 
