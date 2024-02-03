@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Alert, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {  myText1 , myText2} from '../constants/controllers';
 
-const AnpModal = ({modalVisible, setModalVisible}: {modalVisible:boolean, setModalVisible: ()=> void}) => {
+const AnpModal = ({modalVisible, setModalVisible}:any) => {
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     // alignItems: 'center',
-    marginTop: 22,
+    marginVertical: 24,
   },
   modalView: {
     margin: 20,

@@ -15,7 +15,8 @@ const SettingsStack = () => {
           screenOptions={{
             // headerShown: false,
             headerTitleAlign:'center',
-            headerStyle: { backgroundColor:'skyblue'}
+            headerStyle: { backgroundColor:'skyblue'},
+            animation:'slide_from_bottom'
             }}>
           <Stack.Screen
             name="SettingsScreen"

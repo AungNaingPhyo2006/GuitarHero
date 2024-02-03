@@ -8,7 +8,8 @@ import {
   SafeAreaView,
   FlatList,
   Alert,
-  Image
+  Image,
+  ActivityIndicator
 } from 'react-native';
 import { artists } from '../constants/artist';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -18,6 +19,47 @@ type  propsType = NativeStackScreenProps<stackScreens, 'HomeScreen'>
 const HomeScreen = (props: propsType) => {
 const {navigation} = props;
 const { user , setUser} = useAuth();
+
+const [displayedItems, setDisplayedItems] = React.useState(5);
+const [isLoading, setIsLoading] = React.useState(false);
+
+const renderFooter = () => {
+  if (isLoading) {
+    return (
+      <View style={{ alignItems: 'center', marginTop: 10 }}>
+        <ActivityIndicator size="small" color="#0000ff" />
+      </View>
+    );
+  } else {
+    return (
+      <TouchableOpacity style={{...styles.button , backgroundColor:'blue'}} onPress={loadMoreData}>
+        <Text style={{color:'white',fontSize:18}}>Load More</Text>
+      </TouchableOpacity>
+    );
+  }
+};
+
+const loadMoreData = () => {
+  // Check if there are more items to load
+  if (displayedItems >= artists.length) {
+    Alert.alert('No more Artist', 'There are no more artist to load.');
+    return;
+  }
+
+  // Set loading state to true while data is being fetched
+  setIsLoading(true);
+
+  setTimeout(() => {
+    setDisplayedItems(displayedItems + 5);
+    setIsLoading(false);
+  }, 1000); 
+};
+
+
+
+
+
+  const paginatedArtists = artists.slice(0, displayedItems);
 
 
   const renderArtistItem = ({ item }: { item: { id: number; name: string } }) => (
@@ -45,7 +87,7 @@ const { user , setUser} = useAuth();
             source={require('../assets/images/anp.jpg')}
             style={{width:50,height:50, borderRadius:30,marginHorizontal:12}}
             /> */}
-            <View style={{justifyContent:'center',alignItems:'center'}}>
+            <View style={{justifyContent:'center',alignItems:'center' , marginVertical:12}}>
           <Text
             style={{
               fontSize: 25,
@@ -60,11 +102,12 @@ const { user , setUser} = useAuth();
           </View>        
         </View>
         <FlatList
-      showsVerticalScrollIndicator={false}
-      data={artists}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={renderArtistItem}
-    />
+          showsVerticalScrollIndicator={false}
+          data={paginatedArtists}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderArtistItem}
+          ListFooterComponent={renderFooter}
+        />
       </View>
     </SafeAreaView>
   );

@@ -21,6 +21,7 @@ const HomeStack = () => {
         <Stack.Navigator
           initialRouteName="HomeScreen"
          screenOptions={{
+          animation:'slide_from_bottom',
           // headerShown: false
           headerTitleAlign:'center',
           headerStyle: { backgroundColor:'skyblue'}
@@ -29,6 +30,7 @@ const HomeStack = () => {
           <Stack.Screen
             name="HomeScreen"
             component={HomeScreen} 
+            options={{headerShown:false}}
          />
           <Stack.Screen
             name="Details"
