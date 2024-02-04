@@ -154,7 +154,12 @@ const AddPlayer = ({navigation}:any) => {
     //     }
     //   };
 
-   
+    const handlePress = () => {
+      if (songName.trim() !== '') {
+        isSearch ? Save(songUrl) : loadVideos();
+      }
+    };
+
   return (
     <View style={{backgroundColor:'skyblue'}}>
       <Text style={{...styles.titleTxt, marginHorizontal:12,marginTop:24}}>Add Player Name</Text>
@@ -189,10 +194,11 @@ const AddPlayer = ({navigation}:any) => {
 
         
       <TouchableOpacity 
-        onPress={()=> {isSearch ?  Save(songUrl): loadVideos()} } 
+         disabled={songName.trim() === ''}
+        onPress={handlePress} 
         style={{marginHorizontal:9,justifyContent:'center',marginVertical:12,padding:5,borderRadius:5}}>
            {isSearch ? (<Import size={28} color='red' /> ) 
-           : (<Search size={28} color='red' />)} 
+           : (<Search size={28} color={songName.trim() === '' ? 'transparent' : 'red'}/>)} 
         </TouchableOpacity>
     </View>
 
